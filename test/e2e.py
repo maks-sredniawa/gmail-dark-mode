@@ -54,6 +54,9 @@ with sync_playwright() as p:
     def filter_of(selector):
         return page.evaluate(f"getComputedStyle(document.querySelector('{selector}')).filter")
 
+    def action_state():
+        return worker.evaluate("Promise.all([chrome.action.getBadgeText({}), chrome.action.getTitle({})])")
+
     def set_enabled(on):
         worker.evaluate(f"chrome.storage.sync.set({{gdmEnabled: {'true' if on else 'false'}}})")
         page.wait_for_timeout(300)
@@ -66,6 +69,7 @@ with sync_playwright() as p:
     check("a picture inside a turned-back one is left alone", filter_of("#nested"), "none")
     check("<picture> is turned back once", (filter_of("#picture"), filter_of("#picture-img")), (INVERT_BACK, "none"))
     check("the Gmail wordmark stays inverted", filter_of("#wordmark"), "none")
+    check("the toolbar icon says it is on", action_state(), ["", "Gmail dark mode: on — click to turn off"])
 
     page.emulate_media(media="print")
     check("printing is not inverted", (filter_of("html"), filter_of("#photo")), ("none", "none"))
@@ -77,6 +81,7 @@ with sync_playwright() as p:
 
     set_enabled(False)
     check("toggling off restores Gmail", (is_dark(), filter_of("html")), (False, "none"))
+    check("the toolbar icon follows a setting changed elsewhere", action_state(), ["off", "Gmail dark mode: off — click to turn on"])
     set_enabled(True)
     check("toggling on darkens again", is_dark(), True)
 
