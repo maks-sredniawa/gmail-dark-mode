@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          cache-dependency-glob: test/e2e.py
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('test/e2e.py') }}
+      - name: Install Chromium
+        run: uv run --with playwright==1.65.0 playwright install --with-deps chromium
+      - name: Check the manifest and scripts parse
+        run: |
+          python3 -c "import json; json.load(open('extension/manifest.json'))"
+          for f in extension/*.js; do node --check "$f"; done
+      - name: End-to-end
+        run: uv run --script test/e2e.py

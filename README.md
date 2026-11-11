@@ -40,6 +40,14 @@ inverting it back to light.
 mkdir -p dist && cd extension && zip -r ../dist/gmail-dark-mode.zip . && cd ..
 ```
 
+## Test
+
+Loads the extension in headless Chromium against a stand-in Gmail page, as CI does:
+
+```bash
+uv run --script test/e2e.py
+```
+
 ## Known limitations
 
 - Pictures with a white background inside an email (logos, signatures) stay white.
