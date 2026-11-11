@@ -18,7 +18,7 @@ links, labels and brand colours in their own colour family, then inverts picture
 avatars back so they keep close to their real colours.
 
 If Gmail is already dark (its own Dark theme), the extension leaves the page alone rather than
-inverting it back to light.
+inverting it back to light, and marks the toolbar icon in that tab with `!` to say why.
 
 ## Features
 
@@ -55,7 +55,8 @@ uv run --script test/e2e.py
   come out muted.
 - Gmail's picture themes (a photo behind the inbox) may look wrong; the default theme works best.
 - With Gmail's own Dark theme on, the extension stays off, so message bodies keep their white
-  backgrounds there.
+  backgrounds there. The toolbar icon shows `!` in that tab, and its tooltip says to switch Gmail
+  to the Default theme (Settings → Themes) for a full dark mode.
 - Google may change Gmail at any time, which could break the theme until the extension is updated.
 
 ## Contact

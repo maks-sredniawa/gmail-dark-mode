@@ -19,8 +19,9 @@ requests of its own and sends nothing anywhere.
 
 - **Gmail pages** at `mail.google.com`, and no other site. It loads a style sheet that darkens the
   page and adds a class to the page that switches it on. To tell whether Gmail is already dark, it
-  reads the page's text colour. It never reads, stores or sends your email, contacts or anything
-  you type.
+  reads the page's text colour. It passes only that yes or no, with the on or off setting, to its
+  own toolbar icon, which then explains in that tab why it is paused. It never reads, stores or
+  sends your email, contacts or anything you type.
 - **Storage**, to remember one setting: whether the dark mode is on or off.
 - **The toolbar menu**, to add two tip links to the icon's right-click menu. Choosing one opens Buy
   Me a Coffee or PayPal in a new tab.

@@ -21,6 +21,8 @@ those too.
 Gmail's colours change without notice, so the extension doesn't restyle them one by one. It inverts
 the page's colours and turns the hues back, which keeps links, labels and brand colours in their own
 colour family, then turns pictures, videos and avatars back so they keep close to their real colours.
+If Gmail's own Dark theme is on, it leaves the page alone and marks the toolbar icon in that tab
+with `!` to say why.
 
 ## What it does
 
@@ -36,7 +38,8 @@ colour family, then turns pictures, videos and avatars back so they keep close t
   come out muted.
 - Gmail's picture themes (a photo behind the inbox) may look wrong; the default theme works best.
 - With Gmail's own Dark theme on, the extension stays off, so message bodies keep their white
-  backgrounds there.
+  backgrounds there. The toolbar icon shows `!` in that tab, and its tooltip says to switch Gmail
+  to the Default theme (Settings → Themes) for a full dark mode.
 - Google may change Gmail at any time, which could break the theme until the extension is updated.
 
 ## Help and feedback
