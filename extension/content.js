@@ -7,7 +7,6 @@ function luminance(rgb) {
   return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
 }
 
-// Inverting a page Gmail already draws dark (its own Dark theme) would turn it light.
 function gmailIsAlreadyDark() {
   return !!document.body && luminance(getComputedStyle(document.body).color) > 0.6;
 }

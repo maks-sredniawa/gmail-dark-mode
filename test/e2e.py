@@ -2,7 +2,6 @@
 # requires-python = ">=3.10"
 # dependencies = ["playwright==1.65.0"]
 # ///
-"""Loads the unpacked extension in headless Chromium against a stand-in Gmail page."""
 import base64
 import pathlib
 import sys
@@ -67,6 +66,14 @@ with sync_playwright() as p:
     check("a picture inside a turned-back one is left alone", filter_of("#nested"), "none")
     check("<picture> is turned back once", (filter_of("#picture"), filter_of("#picture-img")), (INVERT_BACK, "none"))
     check("the Gmail wordmark stays inverted", filter_of("#wordmark"), "none")
+
+    page.emulate_media(media="print")
+    check("printing is not inverted", (filter_of("html"), filter_of("#photo")), ("none", "none"))
+    page.emulate_media(media="screen")
+    page.emulate_media(forced_colors="active")
+    check("high-contrast mode is not inverted", (filter_of("html"), filter_of("#photo")), ("none", "none"))
+    page.emulate_media(forced_colors="none")
+    check("screen colours come back after print and high contrast", "invert(0.92)" in filter_of("html"), True)
 
     set_enabled(False)
     check("toggling off restores Gmail", (is_dark(), filter_of("html")), (False, "none"))

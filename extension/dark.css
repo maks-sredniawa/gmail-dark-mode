@@ -1,21 +1,21 @@
-/* Gmail's colours live in obfuscated class names that change without notice, so
-   the page is inverted as a whole and real pictures are inverted back. Inverting
-   to 0.92 rather than 1 keeps the background off pure black and text off pure white. */
-html.gdm-on {
-  filter: invert(0.92) hue-rotate(180deg);
-  background: #fff;
-}
+/* 0.92 rather than 1 keeps the background off pure black and text off pure white. */
+@media screen and (forced-colors: none) {
+  html.gdm-on {
+    filter: invert(0.92) hue-rotate(180deg);
+    background: #fff;
+  }
 
-html.gdm-on :is(img, video, canvas, picture, [style*="background-image"]) {
-  filter: invert(1) hue-rotate(180deg);
-}
+  html.gdm-on :is(img, video, canvas, picture, [style*="background-image"]) {
+    filter: invert(1) hue-rotate(180deg);
+  }
 
-/* Already turned back by an ancestor; a second filter would invert them again. */
-html.gdm-on :is(picture, [style*="background-image"]) :is(img, video, canvas, picture, [style*="background-image"]) {
-  filter: none;
-}
+  /* An ancestor already turned these back; a second filter would invert them again. */
+  html.gdm-on :is(picture, [style*="background-image"]) :is(img, video, canvas, picture, [style*="background-image"]) {
+    filter: none;
+  }
 
-/* The "Gmail" wordmark is dark grey text in a picture: leave it inverted so it stays readable. */
-html.gdm-on img[src*="logo_gmail"] {
-  filter: none;
+  /* The "Gmail" wordmark is dark grey text in a picture: leave it inverted so it stays readable. */
+  html.gdm-on img[src*="logo_gmail"] {
+    filter: none;
+  }
 }
