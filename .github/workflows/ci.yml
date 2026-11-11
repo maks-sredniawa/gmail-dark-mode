@@ -9,17 +9,22 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
           cache-dependency-glob: test/e2e.py
+      - name: Read the Playwright pin from the test
+        id: playwright
+        run: |
+          pin=$(grep -om1 'playwright==[0-9.]*' test/e2e.py)
+          echo "pin=$pin" >> "$GITHUB_OUTPUT"
       - uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('test/e2e.py') }}
+          key: ${{ runner.os }}-${{ steps.playwright.outputs.pin }}-chromium
       - name: Install Chromium
-        run: uv run --with playwright==1.65.0 playwright install --with-deps chromium
+        run: uvx --from "${{ steps.playwright.outputs.pin }}" playwright install --with-deps chromium
       - name: Check the manifest and scripts parse
         run: |
           python3 -c "import json; json.load(open('extension/manifest.json'))"
