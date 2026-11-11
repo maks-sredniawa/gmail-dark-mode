@@ -6,6 +6,8 @@ Gmail's own Dark theme darkens the frame around your mail, but HTML emails such 
 receipts and notifications still open on their sender's white background. This extension darkens
 those too.
 
+Website: [maksforge.com/gmail-dark-mode](https://maksforge.com/gmail-dark-mode/) · [Privacy policy](https://maksforge.com/gmail-dark-mode/privacy-policy)
+
 In development: not yet on the Chrome Web Store.
 
 ## How it works
@@ -45,6 +47,10 @@ mkdir -p dist && cd extension && zip -r ../dist/gmail-dark-mode.zip . && cd ..
 - With Gmail's own Dark theme on, the extension stays off, so message bodies keep their white
   backgrounds there.
 - Google may change Gmail at any time, which could break the theme until the extension is updated.
+
+## Contact
+
+Found a screen that's still bright, or something broke? Email [gmaildark.support@maksforge.com](mailto:gmaildark.support@maksforge.com) or [open an issue](https://github.com/maks-sredniawa/gmail-dark-mode/issues).
 
 ## Support
 

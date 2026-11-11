@@ -1,0 +1,8 @@
+remote_theme: maks-sredniawa/pages-theme
+plugins:
+  - jekyll-remote-theme
+title: Dark Mode for Gmail
+description: A Chrome extension that makes the whole of Gmail dark, message bodies included.
+maksforge:
+  icon: /assets/icons/gmail-dark-mode.webp
+  status: building
