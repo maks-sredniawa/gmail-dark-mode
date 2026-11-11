@@ -20,18 +20,20 @@ those too.
 
 Gmail's colours change without notice, so the extension doesn't restyle them one by one. It inverts
 the page's colours and turns the hues back, which keeps links, labels and brand colours in their own
-colour family, then turns pictures, videos and avatars back so they keep their real colours.
+colour family, then turns pictures, videos and avatars back so they keep close to their real colours.
 
 ## What it does
 
 - **Darkens all of Gmail.** The inbox, conversations, message bodies and the compose window.
-- **Keeps pictures real.** Photos, avatars and emoji keep their own colours.
+- **Keeps pictures close to real.** Photos, avatars and emoji keep close to their own colours.
 - **Turns on and off with one click.** Click the toolbar icon. Your choice is remembered.
 - **Stays out of everything else.** It runs only on `mail.google.com`.
 
 ## Known limitations
 
 - Pictures with a white background inside an email (logos, signatures) stay white.
+- Pictures keep close to their real colours, but strong, saturated colours (a bright red, say)
+  come out muted.
 - Gmail's picture themes (a photo behind the inbox) may look wrong; the default theme works best.
 - With Gmail's own Dark theme on, the extension stays off, so message bodies keep their white
   backgrounds there.

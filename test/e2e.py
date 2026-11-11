@@ -15,6 +15,7 @@ PAGE = (ROOT / "test" / "gmail.html").read_text()
 PIXEL = base64.b64decode(
     "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
 )
+SWATCH = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><rect width="32" height="32" fill="rgb({rgb})"/></svg>'
 INVERT_BACK = "invert(1) hue-rotate(180deg)"
 failures = []
 
@@ -32,6 +33,9 @@ def serve(route):
         route.fulfill(status=200, content_type="text/html", body=PAGE)
     elif url.endswith(".png"):
         route.fulfill(status=200, content_type="image/png", body=PIXEL)
+    elif "/swatch-" in url:
+        rgb = url.rsplit("/swatch-", 1)[1].removesuffix(".svg").replace("-", ",")
+        route.fulfill(status=200, content_type="image/svg+xml", body=SWATCH.format(rgb=rgb))
     else:
         route.abort()
 
@@ -54,6 +58,18 @@ with sync_playwright() as p:
     def filter_of(selector):
         return page.evaluate(f"getComputedStyle(document.querySelector('{selector}')).filter")
 
+    def shown_colour(selector):
+        png = base64.b64encode(page.locator(selector).screenshot()).decode()
+        return page.evaluate(
+            """async (png) => {
+                const bitmap = await createImageBitmap(await (await fetch('data:image/png;base64,' + png)).blob());
+                const canvas = new OffscreenCanvas(bitmap.width, bitmap.height).getContext('2d');
+                canvas.drawImage(bitmap, 0, 0);
+                return Array.from(canvas.getImageData(bitmap.width >> 1, bitmap.height >> 1, 1, 1).data.slice(0, 3));
+            }""",
+            png,
+        )
+
     def action_state():
         return worker.evaluate("Promise.all([chrome.action.getBadgeText({}), chrome.action.getTitle({})])")
 
@@ -69,6 +85,10 @@ with sync_playwright() as p:
     check("a picture inside a turned-back one is left alone", filter_of("#nested"), "none")
     check("<picture> is turned back once", (filter_of("#picture"), filter_of("#picture-img")), (INVERT_BACK, "none"))
     check("the Gmail wordmark stays inverted", filter_of("#wordmark"), "none")
+    tan = shown_colour("#tan")
+    check("an everyday colour in a photo stays close", max(abs(a - b) for a, b in zip(tan, (200, 170, 120))) <= 16, True)
+    r, g, b = shown_colour("#red")
+    check("a strong red in a photo stays red", r - max(g, b) >= 60, True)
     check("the toolbar icon says it is on", action_state(), ["", "Gmail dark mode: on — click to turn off"])
 
     page.emulate_media(media="print")
