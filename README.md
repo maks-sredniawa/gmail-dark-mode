@@ -37,8 +37,10 @@ inverting it back to light, and marks the toolbar icon in that tab with `!` to s
 ## Build the store package
 
 ```bash
-mkdir -p dist && cd extension && zip -r ../dist/gmail-dark-mode.zip . && cd ..
+rm -f dist/gmail-dark-mode.zip && mkdir -p dist && cd extension && zip -r ../dist/gmail-dark-mode.zip . && cd ..
 ```
+
+The listing text, images and privacy answers for the Chrome Web Store are in [`store/`](store/README.md).
 
 ## Test
 

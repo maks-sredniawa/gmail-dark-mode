@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Marquee promo tile 1400x560</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;overflow:hidden}
+body{width:1400px;height:560px;position:relative;background:radial-gradient(760px 520px at 1010px 300px,#1f2a3d 0,#131314 70%) #131314;color:#e3e3e3;font-family:"Google Sans",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.copy{position:absolute;left:96px;top:86px;width:560px}
+.icon{width:84px;height:84px;display:block;border-radius:18px;box-shadow:0 0 0 1px #3c4b63}
+h1{margin:30px 0 0;font-size:74px;line-height:80px;font-weight:700;letter-spacing:-.02em}
+h1 span{color:#a8c7fa}
+p{margin:22px 0 0;font-size:28px;line-height:38px;color:#c4c7c5}
+.tag{display:inline-block;margin-top:26px;padding:0 14px;font-size:16px;line-height:30px;letter-spacing:.12em;text-transform:uppercase;color:#a8c7fa;border:1px solid #3c4b63;border-radius:16px}
+
+.card{position:absolute;left:724px;top:64px;width:580px;height:540px;border-radius:22px;background:#fff;overflow:hidden;padding:26px 30px;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.card svg{display:block;position:relative;z-index:2;border-radius:10px}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.brand i{width:30px;height:30px;border-radius:50%;background:#0e7c86}
+.brand b{width:120px;height:14px;border-radius:7px;background:#12344d}
+.brand u{margin-left:auto;width:54px;height:10px;border-radius:5px;background:#0e7c86;box-shadow:-72px 0 #0e7c86,-144px 0 #0e7c86}
+.line{height:12px;border-radius:6px;background:#c9cdd1;margin-top:12px}
+.line.h{height:20px;border-radius:10px;background:#1f1f1f;margin-top:24px;width:66%}
+.row{display:flex;align-items:center;gap:22px;margin:22px 0}
+.btn{width:150px;height:42px;border-radius:21px;background:#e4572e}
+.link{width:170px;height:12px;border-radius:6px;background:#0e7c86}
+.tiles{display:flex;gap:16px}
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(168,199,250,.3);z-index:3}
+.night{position:absolute;left:50%;right:0;top:0;bottom:0;backdrop-filter:invert(.92) hue-rotate(180deg);z-index:1}
+.split{position:absolute;left:1013px;top:36px;bottom:0;width:2px;background:#a8c7fa;box-shadow:0 0 18px 2px rgba(168,199,250,.55);z-index:3}
+.knob{position:absolute;left:988px;top:20px;width:52px;height:52px;border-radius:50%;background:#131314;border:2px solid #a8c7fa;z-index:4;display:grid;place-items:center;box-shadow:0 0 22px rgba(168,199,250,.45)}
+.knob svg{width:26px;height:26px}
+</style>
+</head>
+<body>
+<div class="copy">
+  <svg class="icon" viewBox="0 0 128 128">
+    <rect width="128" height="128" fill="#131314"/>
+    <g fill="none" stroke="#a8c7fa" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"><rect x="20" y="50" width="76" height="54" rx="9"/><path d="M20 55L58 81L96 55"/></g>
+    <circle cx="89" cy="41" r="33" fill="#131314"/>
+    <path d="M112.48 49.58A25 25 0 1 1 87.33 16.06A21 21 0 0 0 112.48 49.58Z" fill="#a8c7fa"/>
+  </svg>
+  <h1><span>Dark Mode</span><br>for Gmail</h1>
+  <p>Emails go dark too.<br>Photos keep their colours.</p>
+  <span class="tag">Unofficial</span>
+</div>
+
+<div class="card">
+  <div class="brand"><i></i><b></b><u></u></div>
+  <svg width="520" height="190" viewBox="0 0 520 190" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="sky" x2="0" y2="1"><stop offset="0" stop-color="#243b78"/><stop offset=".4" stop-color="#a2507f"/><stop offset=".75" stop-color="#f58a55"/><stop offset="1" stop-color="#ffcf7d"/></linearGradient>
+      <radialGradient id="glow"><stop offset="0" stop-color="#fff4cf"/><stop offset=".2" stop-color="#ffd88a" stop-opacity=".85"/><stop offset="1" stop-color="#ff9a4d" stop-opacity="0"/></radialGradient>
+      <linearGradient id="sea" x2="0" y2="1"><stop offset="0" stop-color="#d9735c"/><stop offset=".5" stop-color="#6a4a7e"/><stop offset="1" stop-color="#1d2752"/></linearGradient>
+      <filter id="soft" x="-.2" y="-1" width="1.4" height="3"><feGaussianBlur stdDeviation="5"/></filter>
+    </defs>
+    <rect width="520" height="118" fill="url(#sky)"/>
+    <g filter="url(#soft)" opacity=".6"><ellipse cx="110" cy="36" rx="100" ry="7" fill="#ffb08a"/><ellipse cx="300" cy="58" rx="130" ry="6" fill="#ffc79a"/><ellipse cx="450" cy="28" rx="80" ry="6" fill="#e58aa0"/></g>
+    <circle cx="290" cy="108" r="110" fill="url(#glow)"/>
+    <circle cx="290" cy="104" r="17" fill="#fff8dc"/>
+    <rect y="116" width="520" height="74" fill="url(#sea)"/>
+    <g fill="#ffd88a"><rect x="255" y="120" width="70" height="2.5" rx="1" opacity=".9"/><rect x="265" y="127" width="56" height="2.5" rx="1" opacity=".75"/><rect x="248" y="135" width="80" height="3" rx="1.5" opacity=".6"/><rect x="270" y="144" width="48" height="3" rx="1.5" opacity=".5"/><rect x="256" y="154" width="70" height="3.5" rx="1.5" opacity=".38"/><rect x="274" y="166" width="44" height="4" rx="2" opacity=".28"/></g>
+    <path d="M0 102Q50 90 110 104T210 116L0 117Z" fill="#4a3566" opacity=".85"/>
+    <path d="M520 80L492 84 468 95 440 104 420 112 398 117H520Z" fill="#231a3d"/>
+    <rect x="476" y="66" width="6" height="22" fill="#231a3d"/><circle cx="479" cy="65" r="3" fill="#fff1b8"/>
+    <path d="M150 115V94L164 113ZM144 116H168L164 121H148Z" fill="#1b1736"/>
+  </svg>
+  <div class="line h"></div>
+  <div class="line"></div>
+  <div class="line" style="width:82%"></div>
+  <div class="row"><div class="btn"></div><div class="link"></div></div>
+  <div class="tiles">
+    <svg width="252" height="120" viewBox="0 0 184 88" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="day" x2="0" y2="1"><stop offset="0" stop-color="#3f8fd8"/><stop offset="1" stop-color="#c4e6f5"/></linearGradient>
+        <linearGradient id="bay" x2="0" y2="1"><stop offset="0" stop-color="#1c7fb0"/><stop offset=".55" stop-color="#27b8b4"/><stop offset="1" stop-color="#96e6d2"/></linearGradient>
+        <linearGradient id="cliff" x2="0" y2="1"><stop offset="0" stop-color="#5f9443"/><stop offset=".35" stop-color="#cdb48c"/><stop offset="1" stop-color="#866a4e"/></linearGradient>
+      </defs>
+      <rect width="184" height="50" fill="url(#day)"/>
+      <rect y="46" width="184" height="42" fill="url(#bay)"/>
+      <path d="M0 22L22 18 40 26 52 40 60 58 44 64 0 70Z" fill="url(#cliff)"/>
+      <path d="M184 14L160 20 146 34 138 52 150 60 184 66Z" fill="url(#cliff)"/>
+      <path d="M84 62H98L95 66H86ZM91 61V51L97 61Z" fill="#fff"/>
+    </svg>
+    <svg width="252" height="120" viewBox="0 0 184 88" preserveAspectRatio="xMidYMid slice">
+      <defs><linearGradient id="noon" x2="0" y2="1"><stop offset="0" stop-color="#6fb3e8"/><stop offset="1" stop-color="#e3f2fb"/></linearGradient></defs>
+      <rect width="184" height="88" fill="url(#noon)"/>
+      <rect y="34" width="26" height="54" fill="#e8443a"/><rect x="26" y="24" width="26" height="64" fill="#f7b733"/><rect x="52" y="37" width="26" height="51" fill="#3b8ed0"/><rect x="78" y="28" width="26" height="60" fill="#ef7fa6"/><rect x="104" y="39" width="26" height="49" fill="#4caf7a"/><rect x="130" y="26" width="26" height="62" fill="#f28c38"/><rect x="156" y="35" width="28" height="53" fill="#7e6bc4"/>
+      <g fill="#8d4a34"><rect y="31" width="26" height="4"/><rect x="26" y="21" width="26" height="4"/><rect x="52" y="34" width="26" height="4"/><rect x="78" y="25" width="26" height="4"/><rect x="104" y="36" width="26" height="4"/><rect x="130" y="23" width="26" height="4"/><rect x="156" y="32" width="28" height="4"/></g>
+    </svg>
+  </div>
+  <div class="night"></div>
+</div>
+<div class="split"></div>
+<div class="knob"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.39 5.39 0 0 1-4.4 2.26 5.4 5.4 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z" fill="#a8c7fa"/></svg></div>
+</body>
+</html>
