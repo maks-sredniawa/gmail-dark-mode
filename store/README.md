@@ -9,7 +9,7 @@ Build `dist/gmail-dark-mode.zip` with the command under
 [Build the store package](../README.md#build-the-store-package), then upload it under
 **Package → Upload new package**.
 
-The name, the 130-character summary and the version (`0.0.1`) come from `extension/manifest.json`.
+The name, summary (132 characters at most) and version come from `extension/manifest.json`.
 
 ## Images
 

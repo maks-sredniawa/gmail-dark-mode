@@ -17,6 +17,8 @@ EXTENSION = ROOT / "extension"
 DEMO = STORE / "demo"
 PROMO = STORE / "promo"
 ASSETS = STORE / "assets"
+COMPARE = PROMO / "compare.html"
+PLACEHOLDERS = ("../assets/message-light.png", "../assets/message-dark.png")
 GMAIL = "https://mail.google.com/mail/u/0/"
 
 
@@ -33,7 +35,7 @@ def save(png, name, size):
 
 
 def serve_demo(route):
-    page = route.request.url.removeprefix(GMAIL).split("#")[0].split("?")[0] or "inbox"
+    page = route.request.url.removeprefix(GMAIL).split("?")[0] or "inbox"
     path = DEMO / f"{page}.html"
     if path.is_file():
         route.fulfill(status=200, content_type="text/html", body=path.read_text())
@@ -45,6 +47,17 @@ def data_uri(png):
     return "data:image/png;base64," + base64.b64encode(png).decode()
 
 
+def compare_template():
+    if not COMPARE.is_file():
+        sys.exit(f"{COMPARE.relative_to(ROOT)} is missing")
+    html = COMPARE.read_text()
+    missing = [p for p in PLACEHOLDERS if p not in html]
+    if missing:
+        sys.exit(f"{COMPARE.relative_to(ROOT)}: placeholder {', '.join(missing)} not found")
+    return html
+
+
+compare_html = compare_template()
 ASSETS.mkdir(exist_ok=True)
 demos = {"message": "message", "inbox": "inbox", "compose": "inbox#compose"}
 log(f"Capturing {len(demos)} demo screens, the before/after frame, two promo tiles and the store icon")
@@ -77,28 +90,19 @@ with sync_playwright() as p:
         log(f"[{i}/{len(demos)}] {demo} ...")
         shots[demo] = (capture(demo, dark=False), capture(demo, dark=True))
 
+    log("Before/after frame ...")
     frame = context.new_page()
-    compare = None
-    if "message" in shots and (PROMO / "compare.html").is_file():
-        log("Before/after frame ...")
-        light, dark = shots["message"]
-        html = (
-            (PROMO / "compare.html").read_text()
-            .replace("../assets/message-light.png", data_uri(light))
-            .replace("../assets/message-dark.png", data_uri(dark))
-        )
-        frame.set_viewport_size({"width": 1280, "height": 800})
-        frame.set_content(html, wait_until="load")
-        compare = frame.screenshot()
+    light, dark = shots["message"]
+    html = compare_html.replace(PLACEHOLDERS[0], data_uri(light)).replace(PLACEHOLDERS[1], data_uri(dark))
+    frame.set_viewport_size({"width": 1280, "height": 800})
+    frame.set_content(html, wait_until="load")
 
-    order = ["message", "before-after", "inbox", "compose"]
     screenshots = {demo: dark for demo, (_, dark) in shots.items()}
-    if compare:
-        screenshots["before-after"] = compare
-    numbered = [s for s in order if s in screenshots]
+    screenshots["before-after"] = frame.screenshot()
+    order = ["message", "before-after", "inbox", "compose"]
     for old in ASSETS.glob("screenshot-*.png"):
         old.unlink()
-    for n, name in enumerate(numbered, 1):
+    for n, name in enumerate(order, 1):
         save(screenshots[name], f"screenshot-{n}-{name}.png", (1280, 800))
 
     for name, (width, height) in {"tile": (440, 280), "marquee": (1400, 560)}.items():
