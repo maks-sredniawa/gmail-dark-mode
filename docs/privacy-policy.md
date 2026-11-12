@@ -5,7 +5,7 @@ title: Privacy Policy
 
 # Privacy Policy
 
-_Last updated: 2026-11-11_
+_Last updated: 2026-11-12_
 
 Dark Mode for Gmail is a Chrome extension that makes Gmail on the web dark. This policy describes
 what it can access and what it does with it. It is short because the extension does very little.
@@ -20,8 +20,9 @@ requests of its own and sends nothing anywhere.
 - **Gmail pages** at `mail.google.com`, and no other site. It loads a style sheet that darkens the
   page and adds a class to the page that switches it on. To tell whether Gmail is already dark, it
   reads the page's text colour. It passes only that yes or no, with the on or off setting, to its
-  own toolbar icon, which then explains in that tab why it is paused. It never reads, stores or
-  sends your email, contacts or anything you type.
+  own toolbar icon, which then explains in that tab why it is paused. To keep photos in their real
+  colours, it checks whether a background picture has any text over it, without keeping that text.
+  It never stores or sends your email, contacts or anything you type.
 - **Storage**, to remember one setting: whether the dark mode is on or off.
 - **The toolbar menu**, to add two tip links to the icon's right-click menu. Choosing one opens Buy
   Me a Coffee or PayPal in a new tab.
