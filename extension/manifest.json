@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Dark Mode for Gmail (Unofficial)",
+  "version": "0.0.1",
+  "description": "Makes the whole of Gmail dark, message bodies included. Click the toolbar icon to switch it on or off. Not affiliated with Google.",
+  "permissions": ["storage", "contextMenus"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Toggle Gmail dark mode",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["content.js"],
+      "css": ["dark.css"],
+      "run_at": "document_start"
+    }
+  ]
+}
