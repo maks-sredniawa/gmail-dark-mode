@@ -5,12 +5,12 @@
     background: #fff;
   }
 
-  html.gdm-on :is(img, video, canvas, picture, [style*="background-image"]) {
+  html.gdm-on :is(img, video, canvas, picture, [style*="url("], [background]) {
     filter: invert(1) hue-rotate(180deg);
   }
 
   /* An ancestor already turned these back; a second filter would invert them again. */
-  html.gdm-on :is(picture, [style*="background-image"]) :is(img, video, canvas, picture, [style*="background-image"]) {
+  html.gdm-on :is(picture, [style*="url("], [background]) :is(img, video, canvas, picture, [style*="url("], [background]) {
     filter: none;
   }
 

@@ -100,6 +100,8 @@ with sync_playwright() as p:
     check("photos are turned back", filter_of("#photo"), INVERT_BACK)
     check("background pictures are turned back", filter_of("#banner"), INVERT_BACK)
     check("a picture inside a turned-back one is left alone", filter_of("#nested"), "none")
+    check("pictures set with the background shorthand are turned back once", (filter_of("#tile"), filter_of("#tile-icon")), (INVERT_BACK, "none"))
+    check("pictures set with the background attribute are turned back", filter_of("#cell"), INVERT_BACK)
     check("<picture> is turned back once", (filter_of("#picture"), filter_of("#picture-img")), (INVERT_BACK, "none"))
     check("the Gmail wordmark stays inverted", filter_of("#wordmark"), "none")
     tan = shown_colour("#tan")
