@@ -79,6 +79,35 @@ with sync_playwright() as p:
             png,
         )
 
+    def text_contrast(selector, skip_left=0):
+        png = base64.b64encode(page.locator(selector).screenshot()).decode()
+        return page.evaluate(
+            """async ([png, skipLeft]) => {
+                const bitmap = await createImageBitmap(await (await fetch('data:image/png;base64,' + png)).blob());
+                const canvas = new OffscreenCanvas(bitmap.width, bitmap.height).getContext('2d');
+                canvas.drawImage(bitmap, 0, 0);
+                const { data, width } = canvas.getImageData(0, 0, bitmap.width, bitmap.height);
+                const channel = (c) => (c /= 255) <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+                const counts = new Map();
+                const lums = [];
+                for (let i = 0; i < data.length; i += 4) {
+                    if ((i / 4) % width < skipLeft) continue;
+                    const lum = 0.2126 * channel(data[i]) + 0.7152 * channel(data[i + 1]) + 0.0722 * channel(data[i + 2]);
+                    lums.push(lum);
+                    counts.set(lum, (counts.get(lum) || 0) + 1);
+                }
+                const background = [...counts].sort((a, b) => b[1] - a[1])[0][0];
+                const text = lums.reduce((far, l) => (Math.abs(l - background) > Math.abs(far - background) ? l : far), background);
+                const ratio = (Math.max(text, background) + 0.05) / (Math.min(text, background) + 0.05);
+                return [Math.round(ratio * 10) / 10, text > background];
+            }""",
+            [png, skip_left],
+        )
+
+    def readable_light_on_dark(selector, skip_left=0):
+        ratio, light_text = text_contrast(selector, skip_left)
+        return ratio >= 4.5 and light_text or (ratio, light_text)
+
     def action_state(tab=None):
         details = f"{{tabId: {tab}}}" if tab else "{}"
         return worker.evaluate(f"Promise.all([chrome.action.getBadgeText({details}), chrome.action.getTitle({details})])")
@@ -102,6 +131,15 @@ with sync_playwright() as p:
     check("a picture inside a turned-back one is left alone", filter_of("#nested"), "none")
     check("pictures set with the background shorthand are turned back once", (filter_of("#tile"), filter_of("#tile-icon")), (INVERT_BACK, "none"))
     check("pictures set with the background attribute are turned back", filter_of("#cell"), INVERT_BACK)
+    check("text beside a small background picture stays light on dark", readable_light_on_dark("#bullet", skip_left=24), True)
+    check("text over a background-attribute pattern stays light on dark", readable_light_on_dark("#patterned"), True)
+    check("a photo set with background-size: cover is turned back with its text", (filter_of("#hero"), text_contrast("#hero")[0] >= 4.5), (INVERT_BACK, True))
+    page.evaluate(
+        """document.querySelector('.msg').insertAdjacentHTML('beforeend',
+            '<div id="late-tile" style="width:64px;height:32px;background:url(/pixel.png)"><img id="late-icon" src="/pixel.png" width="16" height="16"></div>')"""
+    )
+    page.wait_for_timeout(500)
+    check("a picture in a message opened later is turned back once", (filter_of("#late-tile"), filter_of("#late-icon")), (INVERT_BACK, "none"))
     check("<picture> is turned back once", (filter_of("#picture"), filter_of("#picture-img")), (INVERT_BACK, "none"))
     check("the Gmail wordmark stays inverted", filter_of("#wordmark"), "none")
     tan = shown_colour("#tan")

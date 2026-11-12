@@ -53,6 +53,8 @@ uv run --script test/e2e.py
 - Pictures with a white background inside an email (logos, signatures) stay white.
 - Pictures keep close to their real colours, but strong, saturated colours (a bright red, say)
   come out muted.
+- A background picture with text over it stays inverted, so the text stays readable, unless the
+  picture is sized to cover its box (a hero photo), in which case both keep their real colours.
 - Gmail's picture themes (a photo behind the inbox) may look wrong; the default theme works best.
 - With Gmail's own Dark theme on, the extension stays off, so message bodies keep their white
   backgrounds there. The toolbar icon shows `!` in that tab, and its tooltip says to switch Gmail

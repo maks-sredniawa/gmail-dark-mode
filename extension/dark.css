@@ -5,12 +5,13 @@
     background: #fff;
   }
 
-  html.gdm-on :is(img, video, canvas, picture, [style*="url("], [background]) {
+  /* content.js adds gdm-picture only where the background picture is the content, not a bullet or pattern behind text. */
+  html.gdm-on :is(img, video, canvas, picture, .gdm-picture:where([style*="background" i][style*="url(" i], [background])) {
     filter: invert(1) hue-rotate(180deg);
   }
 
   /* An ancestor already turned these back; a second filter would invert them again. */
-  html.gdm-on :is(picture, [style*="url("], [background]) :is(img, video, canvas, picture, [style*="url("], [background]) {
+  html.gdm-on :is(picture, .gdm-picture:where([style*="background" i][style*="url(" i], [background])) :is(img, video, canvas, picture, .gdm-picture:where([style*="background" i][style*="url(" i], [background])) {
     filter: none;
   }
 
