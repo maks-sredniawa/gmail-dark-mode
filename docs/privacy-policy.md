@@ -23,11 +23,12 @@ requests of its own and sends nothing anywhere.
   which then explains in that tab why it is paused. To keep photos in their real colours, it checks
   whether a background picture has any text over it, without keeping that text. It never stores or
   sends your email, contacts or anything you type.
-- **Google's menus inside Gmail**: the account switcher and apps grid (`ogs.google.com`) and contact
-  cards (`contacts.google.com`). Gmail shows these as small Google pages inside its own, and the
-  extension's darkening would invert their avatars and app icons. It turns those pictures back, and
-  only when the menu is open inside Gmail with the dark mode on. It reads nothing from them but
-  whether each picture has text over it, and keeps nothing.
+- **Google's account, apps and contact menus**: the account switcher and apps grid
+  (`ogs.google.com`) and contact cards (`contacts.google.com`). Gmail shows these as small Google
+  pages inside its own, and the extension's darkening would invert their avatars and app icons. A
+  small script loads into these menus wherever they appear, on any Google site, but does nothing
+  unless the menu is open inside Gmail with the dark mode on; then it turns those pictures back. It
+  reads nothing from them but whether each picture has text over it, and keeps nothing.
 - **Storage**, to remember one setting: whether the dark mode is on or off.
 - **The toolbar menu**, to add two tip links to the icon's right-click menu. Choosing one opens Buy
   Me a Coffee or PayPal in a new tab.
