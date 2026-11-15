@@ -41,7 +41,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
 });
 
 function tellFrames(tabId, { enabled, gmailDark }) {
-  // Rejects when no frame in the tab is listening, which is the usual case until a Google menu opens.
+  // Rejects only when Gmail's content script is gone, e.g. after the extension reloads under an open tab.
   chrome.tabs.sendMessage(tabId, { type: 'gdmFrames', on: enabled && !gmailDark }).catch(() => {});
 }
 

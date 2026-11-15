@@ -29,8 +29,9 @@ with `!` to say why.
 - **Darkens all of Gmail.** The inbox, conversations, message bodies and the compose window.
 - **Keeps pictures close to real.** Photos, avatars and emoji keep close to their own colours.
 - **Turns on and off with one click.** Click the toolbar icon. Your choice is remembered.
-- **Stays out of everything else.** It runs only on Gmail: `mail.google.com`, plus Google's
-  account, apps and contact menus while they are open inside Gmail.
+- **Stays out of everything else.** It acts only on Gmail (`mail.google.com`). A small script also
+  loads into Google's account, apps and contact menus wherever they appear, but it does nothing
+  unless the menu is open inside Gmail with dark mode on.
 
 ## Known limitations
 

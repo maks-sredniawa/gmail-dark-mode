@@ -37,7 +37,7 @@ What it does
 • Keeps photos, avatars and emoji close to their real colours
 • Keeps links, labels and brand colours in their own colour family
 • Turns on and off with one click on the toolbar icon, and remembers your choice
-• Runs only on Gmail, plus Google's account, apps and contact menus while they are open inside Gmail
+• Acts only on Gmail. A small script also loads into Google's account, apps and contact menus wherever they appear, but does nothing unless the menu is open inside Gmail with dark mode on
 
 Private by design
 No account, no tracking, no analytics, no ads and no network requests. The extension never stores or sends your email. The one thing it remembers is whether dark mode is on or off.
@@ -88,7 +88,7 @@ Adds two items to the toolbar icon's right-click menu that open optional tip pag
 `https://ogs.google.com/*/widget/*` and `https://contacts.google.com/widget/hovercard/*`)
 
 ```text
-Darkening Gmail is the extension's only purpose. Its main content script runs on mail.google.com: it adds a style sheet and a class to the page, reads the page's text colour to detect Gmail's own Dark theme, and checks whether background pictures have text over them so photos keep their colours. Gmail shows Google's account switcher, apps grid and contact cards as frames from ogs.google.com and contacts.google.com, which the darkening inverts too; a second script runs in those frames only when they sit inside Gmail with dark mode on, and turns their avatars and app icons back to their real colours. It never stores or sends email content and makes no network requests.
+Darkening Gmail is the extension's only purpose. Its main content script runs on mail.google.com: it adds a style sheet and a class to the page, reads the page's text colour to detect Gmail's own Dark theme, and checks whether background pictures have text over them so photos keep their colours. Gmail shows Google's account switcher, apps grid and contact cards as frames from ogs.google.com and contacts.google.com, which the darkening inverts too. A second script is loaded into those frames wherever they appear, on any Google site, but it stops at once unless the page around it is mail.google.com, and only while dark mode is on does it turn their avatars and app icons back to their real colours. It never stores or sends email content and makes no network requests.
 ```
 
 **Remote code:** No, I am not using remote code.
