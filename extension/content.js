@@ -71,6 +71,10 @@ chrome.storage.onChanged.addListener((changes, area) => {
   }
 });
 
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  if (msg.type === 'gdmFrameAsk') sendResponse(root.classList.contains('gdm-on'));
+});
+
 new MutationObserver(apply).observe(root, { attributes: true, attributeFilter: ['class'] });
 new MutationObserver(queueMarkPictures).observe(root, { childList: true, subtree: true });
 

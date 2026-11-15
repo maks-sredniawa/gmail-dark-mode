@@ -40,8 +40,25 @@ chrome.storage.onChanged.addListener((changes, area) => {
   if (area === 'sync' && changes[KEY]) refresh();
 });
 
-chrome.runtime.onMessage.addListener((msg, sender) => {
-  if (msg.type === 'gmailTheme' && sender.tab) showTabState(sender.tab.id, msg);
+function tellFrames(tabId, { enabled, gmailDark }) {
+  // Rejects only when Gmail's content script is gone, e.g. after the extension reloads under an open tab.
+  chrome.tabs.sendMessage(tabId, { type: 'gdmFrames', on: enabled && !gmailDark }).catch(() => {});
+}
+
+function askGmail(tabId, sendResponse) {
+  chrome.tabs.sendMessage(tabId, { type: 'gdmFrameAsk' }, { frameId: 0 }).then(sendResponse, () => sendResponse(false));
+}
+
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  if (!sender.tab) return;
+  if (msg.type === 'gmailTheme') {
+    showTabState(sender.tab.id, msg);
+    tellFrames(sender.tab.id, msg);
+  }
+  if (msg.type === 'gdmFrameAsk') {
+    askGmail(sender.tab.id, sendResponse);
+    return true;
+  }
 });
 
 chrome.contextMenus.onClicked.addListener((info) => {

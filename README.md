@@ -25,7 +25,9 @@ inverting it back to light, and marks the toolbar icon in that tab with `!` to s
 - Dark inbox, conversations, message bodies and compose window
 - Photos, avatars and emoji keep close to their real colours
 - One click on the toolbar icon turns it on or off; your choice is remembered
-- Runs only on `mail.google.com`
+- Acts only on Gmail (`mail.google.com`). A small script also loads into Google's account, apps and
+  contact menus wherever they appear, but it does nothing unless the menu is open inside Gmail with
+  dark mode on, where it keeps their avatars and icons in their colours
 - No tracking, no data collection, no network requests
 
 ## Install from source

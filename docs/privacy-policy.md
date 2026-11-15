@@ -5,7 +5,7 @@ title: Privacy Policy
 
 # Privacy Policy
 
-_Last updated: 2026-11-12_
+_Last updated: 2026-11-15_
 
 Dark Mode for Gmail is a Chrome extension that makes Gmail on the web dark. This policy describes
 what it can access and what it does with it. It is short because the extension does very little.
@@ -17,12 +17,18 @@ requests of its own and sends nothing anywhere.
 
 ## What it can access, and why
 
-- **Gmail pages** at `mail.google.com`, and no other site. It loads a style sheet that darkens the
-  page and adds a class to the page that switches it on. To tell whether Gmail is already dark, it
-  reads the page's text colour. It passes only that yes or no, with the on or off setting, to its
-  own toolbar icon, which then explains in that tab why it is paused. To keep photos in their real
-  colours, it checks whether a background picture has any text over it, without keeping that text.
-  It never stores or sends your email, contacts or anything you type.
+- **Gmail pages** at `mail.google.com`. It loads a style sheet that darkens the page and adds a
+  class to the page that switches it on. To tell whether Gmail is already dark, it reads the page's
+  text colour. It passes only that yes or no, with the on or off setting, to its own toolbar icon,
+  which then explains in that tab why it is paused. To keep photos in their real colours, it checks
+  whether a background picture has any text over it, without keeping that text. It never stores or
+  sends your email, contacts or anything you type.
+- **Google's account, apps and contact menus**: the account switcher and apps grid
+  (`ogs.google.com`) and contact cards (`contacts.google.com`). Gmail shows these as small Google
+  pages inside its own, and the extension's darkening would invert their avatars and app icons. A
+  small script loads into these menus wherever they appear, on any Google site, but does nothing
+  unless the menu is open inside Gmail with the dark mode on; then it turns those pictures back. It
+  reads nothing from them but whether each picture has text over it, and keeps nothing.
 - **Storage**, to remember one setting: whether the dark mode is on or off.
 - **The toolbar menu**, to add two tip links to the icon's right-click menu. Choosing one opens Buy
   Me a Coffee or PayPal in a new tab.

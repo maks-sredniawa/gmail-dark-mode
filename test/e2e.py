@@ -12,6 +12,10 @@ from playwright.sync_api import sync_playwright
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 EXTENSION = ROOT / "extension"
 PAGE = (ROOT / "test" / "gmail.html").read_text()
+SWITCHER = """<!doctype html><html><head><style>.sprite { display: inline-block; width: 32px; height: 32px; background: url(/swatch-200-170-120.svg) }</style></head>
+<body style="margin:0;background:#fff;color:#202124">
+<img id="avatar" src="/swatch-200-170-120.svg" alt="" width="32" height="32"><span id="sprite" class="sprite"></span><span id="label">Account</span>
+</body></html>"""
 PIXEL = base64.b64decode(
     "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
 )
@@ -38,6 +42,8 @@ def serve(route):
     url = route.request.url
     if url.startswith("https://mail.google.com/mail/"):
         route.fulfill(status=200, content_type="text/html", body=PAGE)
+    elif url.startswith("https://ogs.google.com/u/0/widget/"):
+        route.fulfill(status=200, content_type="text/html", body=SWITCHER)
     elif url.endswith(".png"):
         route.fulfill(status=200, content_type="image/png", body=PIXEL)
     elif "/swatch-" in url:
@@ -78,6 +84,10 @@ with sync_playwright() as p:
             }""",
             png,
         )
+
+    def switcher_filters():
+        frame = page.frame_locator("#switcher")
+        return tuple(frame.locator(s).evaluate("el => getComputedStyle(el).filter") for s in ("#avatar", "#sprite", "#label"))
 
     def text_contrast(selector, skip_left=0):
         png = base64.b64encode(page.locator(selector).screenshot()).decode()
@@ -147,6 +157,9 @@ with sync_playwright() as p:
     r, g, b = shown_colour("#red")
     check("a strong red in a photo stays red", r - max(g, b) >= 60, True)
     check("the toolbar icon says it is on", action_state(), ON)
+    check("pictures in Google's account and apps menus are turned back", switcher_filters(), (INVERT_BACK, INVERT_BACK, "none"))
+    avatar = shown_colour("#switcher >> internal:control=enter-frame >> #avatar")
+    check("an avatar in Google's account menu keeps its colour", max(abs(a - b) for a, b in zip(avatar, (200, 170, 120))) <= 16, True)
 
     page.emulate_media(media="print")
     check("printing is not inverted", (filter_of("html"), filter_of("#photo")), ("none", "none"))
@@ -159,15 +172,18 @@ with sync_playwright() as p:
     set_enabled(False)
     check("toggling off restores Gmail", (is_dark(), filter_of("html")), (False, "none"))
     check("the toolbar icon follows a setting changed elsewhere", action_state(), OFF)
+    check("toggling off restores Google's menus", switcher_filters(), ("none", "none", "none"))
     set_enabled(True)
     check("toggling on darkens again", is_dark(), True)
 
     set_gmail_theme(dark=True)
     check("stays off while Gmail's own Dark theme is on", is_dark(), False)
+    check("Google's menus stay as they are under Gmail's own Dark theme", switcher_filters(), ("none", "none", "none"))
     warned = tab_state()
     check("the tab's icon explains Gmail's Dark theme, other tabs keep the global icon", (warned, action_state()), (GMAIL_DARK_THEME, ON))
     set_gmail_theme(dark=False)
     check("comes back when Gmail turns light again", is_dark(), True)
+    check("Google's menus follow when Gmail turns light again", switcher_filters()[0], INVERT_BACK)
     check("the tab's icon goes back to the global one when Gmail turns light", (warned, tab_state()), (GMAIL_DARK_THEME, ON))
 
     set_enabled(False)
@@ -184,6 +200,13 @@ with sync_playwright() as p:
     page.reload(wait_until="load")
     page.wait_for_timeout(500)
     check("the off setting survives a reload", is_dark(), False)
+    check("Google's menus stay off after a reload with the setting off", switcher_filters(), ("none", "none", "none"))
+    set_enabled(True)
+
+    outside = context.new_page()
+    outside.goto("https://ogs.google.com/u/0/widget/account", wait_until="load")
+    outside.wait_for_timeout(500)
+    check("Google's menus outside Gmail are left alone", outside.evaluate("getComputedStyle(document.querySelector('#avatar')).filter"), "none")
 
     context.close()
 
