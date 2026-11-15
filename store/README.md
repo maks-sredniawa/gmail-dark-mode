@@ -37,7 +37,7 @@ What it does
 • Keeps photos, avatars and emoji close to their real colours
 • Keeps links, labels and brand colours in their own colour family
 • Turns on and off with one click on the toolbar icon, and remembers your choice
-• Runs only on mail.google.com
+• Runs only on Gmail, plus Google's account, apps and contact menus while they are open inside Gmail
 
 Private by design
 No account, no tracking, no analytics, no ads and no network requests. The extension never stores or sends your email. The one thing it remembers is whether dark mode is on or off.
@@ -84,10 +84,11 @@ Remembers one setting, whether dark mode is on or off, in chrome.storage.sync so
 Adds two items to the toolbar icon's right-click menu that open optional tip pages (Buy Me a Coffee, PayPal) in a new tab. No menu items are added to web pages.
 ```
 
-**Host permission justification** (the content script on `https://mail.google.com/*`)
+**Host permission justification** (the content scripts on `https://mail.google.com/*`,
+`https://ogs.google.com/*/widget/*` and `https://contacts.google.com/widget/hovercard/*`)
 
 ```text
-Darkening Gmail is the extension's only purpose, so its content script runs on mail.google.com and nowhere else. It adds a style sheet and a class to the page, reads the page's text colour to detect Gmail's own Dark theme, and checks whether background pictures have text over them so photos keep their colours. It never stores or sends email content and makes no network requests.
+Darkening Gmail is the extension's only purpose. Its main content script runs on mail.google.com: it adds a style sheet and a class to the page, reads the page's text colour to detect Gmail's own Dark theme, and checks whether background pictures have text over them so photos keep their colours. Gmail shows Google's account switcher, apps grid and contact cards as frames from ogs.google.com and contacts.google.com, which the darkening inverts too; a second script runs in those frames only when they sit inside Gmail with dark mode on, and turns their avatars and app icons back to their real colours. It never stores or sends email content and makes no network requests.
 ```
 
 **Remote code:** No, I am not using remote code.

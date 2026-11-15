@@ -1,0 +1,9 @@
+@media screen and (forced-colors: none) {
+  html.gdm-frame-on :is(img, video, canvas, picture, .gdm-picture) {
+    filter: invert(1) hue-rotate(180deg);
+  }
+
+  html.gdm-frame-on :is(picture, .gdm-picture) :is(img, video, canvas, picture, .gdm-picture) {
+    filter: none;
+  }
+}

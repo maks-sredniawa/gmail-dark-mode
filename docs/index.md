@@ -29,7 +29,8 @@ with `!` to say why.
 - **Darkens all of Gmail.** The inbox, conversations, message bodies and the compose window.
 - **Keeps pictures close to real.** Photos, avatars and emoji keep close to their own colours.
 - **Turns on and off with one click.** Click the toolbar icon. Your choice is remembered.
-- **Stays out of everything else.** It runs only on `mail.google.com`.
+- **Stays out of everything else.** It runs only on Gmail: `mail.google.com`, plus Google's
+  account, apps and contact menus while they are open inside Gmail.
 
 ## Known limitations
 
